@@ -1,0 +1,6 @@
+*.jar
+*.class
+target
+todos-core/target
+todos-cmd/target
+todos-web/target
