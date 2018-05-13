@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.io.Console;
 import java.util.List;
 import in.anandm.todos.model.user.User;
-import java.util.Arrays;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

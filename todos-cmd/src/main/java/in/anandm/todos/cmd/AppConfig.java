@@ -2,28 +2,48 @@ package in.anandm.todos.cmd;
 
 import in.anandm.todos.model.user.UserRepository;
 import in.anandm.todos.model.todo.TodoRepository;
-import in.anandm.todos.infrastructure.persistance.memory.UserRepositoryImpl;
-import in.anandm.todos.infrastructure.persistance.memory.TodoRepositoryImpl;
+import in.anandm.todos.infrastructure.persistance.jdbc.UserRepositoryImpl;
+import in.anandm.todos.infrastructure.persistance.jdbc.TodoRepositoryImpl;
 import in.anandm.todos.service.AuthService;
 
 
 import org.springframework.context.annotation.Configuration;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import org.springframework.context.annotation.Bean;
+
+import java.beans.PropertyVetoException;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class AppConfig {
     
+	@Bean
+	public DataSource datasource() {
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		cpds.setJdbcUrl("jdbc:mysql://localhost/todos?user=root&password=");
+		try {
+			cpds.setDriverClass("com.mysql.jdbc.Driver");
+		} catch (PropertyVetoException e) {
+			throw new RuntimeException(e);
+		}
+		return cpds;
+	}
+	
     @Bean
     public UserRepository userRepository() {
-        return new UserRepositoryImpl();
+        return new UserRepositoryImpl(datasource());
     }
     
     
     @Bean
     public TodoRepository todoRepository() {
-        return new TodoRepositoryImpl();
+        return new TodoRepositoryImpl(datasource());
     }
     
     @Bean

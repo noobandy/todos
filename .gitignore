@@ -1,5 +1,8 @@
 *.jar
 *.class
+.classpath
+.project
+.settings
 target
 todos-core/target
 todos-cmd/target
